@@ -24,9 +24,31 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs 
 // =========================================================
 // This is called the root dialog. It is the first point of entry for any message the bot receives
-bot.dialog('/', function (session) {
-
-// Send 'hello world' to the user
-session.send("Hello World");
-
-});
+bot.dialog('/', [
+    
+    function (session) {
+        session.send("Welcome to the dinner reservation.");
+        builder.Prompts.text(session, "May I Know your Name ?");
+    }
+    ,
+    function (session,results) {
+        // session.dialogData.userName = results.response;
+        session.send("Welcome %s !",results.response );
+        builder.Prompts.time(session, "Please provide a reservation date and time (e.g.: June 6th at 5pm)");
+    },
+    function (session, results) {
+        session.dialogData.reservationDate = builder.EntityRecognizer.resolveTime([results.response]);
+        builder.Prompts.text(session, "How many people are in your party?");
+    },
+    function (session, results) {
+        session.dialogData.partySize = results.response;
+        builder.Prompts.text(session, "Who's name will this reservation be under?");
+    },
+    function (session, results) {
+        session.dialogData.reservationName = results.response;
+    
+        // Process request and display reservation details
+        session.send(`Reservation confirmed. Reservation details: <br/>Date/Time: ${session.dialogData.reservationDate} <br/>Party size: ${session.dialogData.partySize} <br/>Reservation name: ${session.dialogData.reservationName}`);
+        session.endDialog();
+    }
+    ]);
