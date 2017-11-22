@@ -45,6 +45,7 @@ function (session, results) {
     // Process request and display reservation details
     session.send(`Reservation confirmed. Reservation details: <br/>Date/Time: ${session.dialogData.reservationDate} <br/>Party size: ${session.dialogData.partySize} <br/>Reservation name: ${session.dialogData.reservationName}`);
     session.endDialog();
+    
 }
 ]);
 
