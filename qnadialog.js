@@ -1,7 +1,7 @@
 var request = require('request');
 module.exports = function(session,args,next){
     session.sendTyping();
-    wait(6000);
+    
     var askedQuestion = session.message.text;
     var answerQuestion = JSON.stringify({question:askedQuestion});
 
