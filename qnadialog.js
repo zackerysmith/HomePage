@@ -6,7 +6,7 @@ module.exports = function(session,args,next){
     var answerQuestion = JSON.stringify({question:askedQuestion});
 
     const URLpart1 = "https://westus.api.cognitive.microsoft.com/qnamaker/v1.0/knowledgebases/";
-    var KnowledgeBaseID = process.env.KBID;
+    var KnowledgeBaseID = '';//process.env.KBID;
     const URLpart2 = "/generateAnswer";
     
     var dialogURL = URLpart1 + KnowledgeBaseID + URLpart2;
@@ -33,5 +33,5 @@ module.exports = function(session,args,next){
             }
         }
 
-    }).setHeader('Ocp-Apim-Subscription-Key', process.env.SUBSCRIPTION_KEY);
+    }).setHeader('Ocp-Apim-Subscription-Key','');// process.env.SUBSCRIPTION_KEY);
 };
